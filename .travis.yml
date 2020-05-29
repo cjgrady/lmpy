@@ -21,7 +21,7 @@ after_success:
 jobs:
   include:
     - stage: deploy
-      python: '3.5'
+      python: '3.7'
       before_install:
         - sudo add-apt-repository --yes ppa:ubuntugis/ppa
         - sudo apt-get --quiet update
@@ -31,13 +31,11 @@ jobs:
       install:
         - pip install GDAL==`gdal-config --version`
         - pip install -r requirements.txt
-      script:
-        - py.test tests/ --pep8 lmpy -v --cov lmpy --cov-report term-missing
       before_deploy:
         - python setup.py sdist bdist_wheel
       deploy:
         provider: releases
-        cleanup: false
+        skip_cleanup: true
         api_key:
           secure: Jtt0uxJsAc+EJo+ycbRvVnAdhqdEeyJSeilhb++tdI48TPLJRlk1g30K+HDqgIc/zNuEYt4C30pQdO5LXRvHZ9IyhofLlBwoeIqwWXr6gYNRNdE/PnlBL840TYrEnqoq2l9G4/Hhxizd3wSzJ0EbvOq7ivswm5zI/p3s5xoUyOAluOHGqrYLgU8IQT6isU5IDG+Ebf74Q2EfTO/Dk0n1goTQPoNROfhbUk4GNNPdhrdsB3NyJ1nbTw+RYfUjLThry7TfnJz/Q1d72MIzhzo/F3Zi45vSKLpPLeEoJH4dgSHu/mi/jX0N8A36G/EVpIguL3PavZqTmKE0arfrKHWfIs3zOnYORffio1nu4/ohxH8wnxyzYS7VPqiUJBV7cM4xJpbcSEKKlQ1ZIy3VZ/Rn87wepsx02vRuRjACu5p2zYxr4a95VJL1/xQJikV5tjzCfaJMGOCJd0HVEhfF91nAEWGrRq/wJZtbCobe6kJMrldgo+syIsd3R9ZEovFwjfr6i+LPdVRJGuqOizYFHaj94fInB/7n396TIiyGu3guAmmnsQVkVMs0PpjRdsL9Dywl7KfVM84rgQWoDr16KDPerOz+FrOQHI+mhyf64AVjDM00q8P8YPSHHv/Sh1Xq7Zwm6WUmUaNLN2hhAeyzx0BU3LGzeOSFNUwcGPDnIdOkxcY=
         file_glob: true
