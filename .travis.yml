@@ -2,32 +2,31 @@ dist: xenial
 language: python
 os: linux
 python:
-  - "3.5"
-  - "3.6"
-  - "3.7"
+- '3.5'
+- '3.6'
+- '3.7'
 before_install:
-  - sudo add-apt-repository --yes ppa:ubuntugis/ppa
-  - sudo apt-get --quiet update
-  - sudo apt-get install --yes libgdal-dev gdal-bin python-gdal
-  - export CPLUS_INCLUDE_PATH=/usr/include/gdal
-  - export C_INCLUDE_PATH=/usr/include/gdal
+- sudo add-apt-repository --yes ppa:ubuntugis/ppa
+- sudo apt-get --quiet update
+- sudo apt-get install --yes libgdal-dev gdal-bin python-gdal
+- export CPLUS_INCLUDE_PATH=/usr/include/gdal
+- export C_INCLUDE_PATH=/usr/include/gdal
 install:
-  - pip install GDAL==`gdal-config --version`
-  - pip install -r requirements.txt
+- pip install GDAL==`gdal-config --version`
+- pip install -r requirements.txt
 script:
-  - py.test tests/ --pep8 lmpy -v --cov lmpy --cov-report term-missing
+- py.test tests/ --pep8 lmpy -v --cov lmpy --cov-report term-missing
 after_success:
-  - coveralls
+- coveralls
 before_deploy:
   - python setup.py sdist bdist_wheel
 deploy:
   provider: releases
-  prerelease: true
   api_key:
-    secure: Q6QnzM1HiThYRPEYj3XbD3Ek5D+Jg2mNzod/92RbHcJPWw9U9ojszT7jCv8i1P8+IWaTkLGWWQW4DzCoYJH+ls6MOJ5U8iOQXNgzfF0+7ltNZe4u8EmeQ6LqyNcw+Sv99A7Z02rqA7zT/tvyq6Rl+qESUXAjjDNsIjqhdOaMReo4N6zWb3+VOrxog6yf6KQG4OQhRTjcqqSz/YFnLTOP7H2jttzaCL+MKmw12mLAFpRb8QiS0O1phwNgQLsdhJPf8ys2GhxRzhv9KoJ5Jkim/cKqepuAeDAz4eVDg/d74B0+tgsbxlUSEJxPWbY61cPj2hqCwl5FHMxRNf5GyczvHTI5LTVsX6F7lXT0c7wepXZ+e/4kD5Lfan7/L4nff6RDxGVgZ1VGMzsuSDpI1Z5lC7Yeh14okr4V/esJM7rbJGOgLVLGWlFAxNjZx0Ny7VDhXZVHzIC+MwwAhilmxE34SByu99WTVNri+X0mqdfCFD2+y+VLK8yGYlkH5QBRvp62a+lO/lENKSv0BXCfesJADYhR0vaEIYn5sZvaVHBLBrfX52L7D9Kga6rgbt2XDG1L7SZc8zCnnc26Z5yiJdi9oXh3JmagMU8emMGbcoOEnLgmsi4ejycmKr0rSjrvCgpcp5pkpNZoif4KtbJVOfdxi8DgMVK+MEPoowIUr3UpfhI=
+    secure: Jtt0uxJsAc+EJo+ycbRvVnAdhqdEeyJSeilhb++tdI48TPLJRlk1g30K+HDqgIc/zNuEYt4C30pQdO5LXRvHZ9IyhofLlBwoeIqwWXr6gYNRNdE/PnlBL840TYrEnqoq2l9G4/Hhxizd3wSzJ0EbvOq7ivswm5zI/p3s5xoUyOAluOHGqrYLgU8IQT6isU5IDG+Ebf74Q2EfTO/Dk0n1goTQPoNROfhbUk4GNNPdhrdsB3NyJ1nbTw+RYfUjLThry7TfnJz/Q1d72MIzhzo/F3Zi45vSKLpPLeEoJH4dgSHu/mi/jX0N8A36G/EVpIguL3PavZqTmKE0arfrKHWfIs3zOnYORffio1nu4/ohxH8wnxyzYS7VPqiUJBV7cM4xJpbcSEKKlQ1ZIy3VZ/Rn87wepsx02vRuRjACu5p2zYxr4a95VJL1/xQJikV5tjzCfaJMGOCJd0HVEhfF91nAEWGrRq/wJZtbCobe6kJMrldgo+syIsd3R9ZEovFwjfr6i+LPdVRJGuqOizYFHaj94fInB/7n396TIiyGu3guAmmnsQVkVMs0PpjRdsL9Dywl7KfVM84rgQWoDr16KDPerOz+FrOQHI+mhyf64AVjDM00q8P8YPSHHv/Sh1Xq7Zwm6WUmUaNLN2hhAeyzx0BU3LGzeOSFNUwcGPDnIdOkxcY=
   file_glob: true
-  file:
-    - dist/*
-  skip_cleanup: true
+  file: dist/*
   on:
     tags: true
+    repo: cjgrady/lmpy
+  skip_cleanup: 'true'
